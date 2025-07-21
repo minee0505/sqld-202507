@@ -14,23 +14,23 @@ FROM POSTS
 ;
 
 -- 열 별칭 정하기
-SELECT 
+SELECT
     USERNAME AS "사용자 이름"
-    , EMAIL AS "이메일"
+     , EMAIL AS "이메일"
 FROM USERS
 ;
 
 -- AS는 생략가능함
-SELECT 
+SELECT
     USERNAME "사용자 이름"
-    , EMAIL "이메일"
+     , EMAIL "이메일"
 FROM USERS
 ;
 
 -- 띄어쓰기가 없으면 따옴표 생략 가능
-SELECT 
+SELECT
     USERNAME "사용자 이름"
-    , EMAIL 이메일
+     , EMAIL 이메일
 FROM USERS
 ;
 

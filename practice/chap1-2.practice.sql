@@ -10,8 +10,8 @@ SELECT user_id
 FROM LIKES
 ;
 
-SELECT 
-    full_name as "전체 이름", 
+SELECT
+    full_name as "전체 이름",
     bio as "자기소개"
 FROM USER_PROFILES
 ;
