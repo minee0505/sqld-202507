@@ -141,6 +141,76 @@ where H.TAG_NAME LIKE '%일상%'
 order by PT.POST_ID
 ;
 
+-- 댓글 테이블 조회
+select * from COMMENTS;
+select * from POSTS;
 
+-- 댓글과 게시물의 피드의 내용을 함께 조회
+
+-- 오라클 조인, 표준 조인 (DB에 따른 분류)
+-- 내부 조인, 외부 조인 (디비랑 관계없이 분류)
+
+select
+    p.POST_ID,
+    p.CONTENT,
+    p.VIEW_COUNT,
+    to_char(p.CREATION_DATE, 'YYYY-MM-DD'),
+    c.COMMENT_TEXT
+from POSTS P inner join Comments C
+on p.POST_ID = c.POST_ID;
+
+select
+    p.USER_ID,
+    u.USERNAME,
+    p.POST_ID,
+    p.CONTENT,
+    p.VIEW_COUNT,
+    to_char(p.CREATION_DATE, 'YYYY-MM-DD'),
+    c.USER_ID,
+    u2.USERNAME as commenter,
+    c.COMMENT_TEXT
+from POSTS P
+inner join Comments C
+on p.POST_ID = c.POST_ID
+inner join users U
+on P.USER_ID = U.USER_ID
+inner join USERS U2
+on U2.USER_ID = c.USER_ID
+;
+
+-- outer 조인 예시
+select * from USERS;            -- 필수 정보
+select * from USER_PROFILES;    -- 선택 정보
+
+-- inner join의 문제점: 값이 메칭되는 경우만 조회되므로
+-- 상세프로필을 안 적은 회원은 나타나지 않음.
+select
+    u.USER_ID,
+    u.USERNAME,
+    u.EMAIL,
+    up.FULL_NAME,
+    up.BIO
+from users U
+join USER_PROFILES UP
+on u.USER_ID = up.USER_ID
+;
+
+-- 우선 회원정보는 모두 조회하고, 단, 상세프로필이 있으면 걔네만 같이 조회해라
+-- Left outer join: 왼쪽은 다 보여주고, 오른쪽 매칭 안되면 null로 표기
+select
+    *
+from users U
+Left outer join USER_PROFILES UP
+on u.USER_ID = up.USER_ID
+order by u.USER_ID
+;
+
+-- 오라클 외부 조인: left -> 오른쪽 조건에 (+), Right -> 왼쪽 조건에 (-)
+select
+    *
+from users U, USER_PROFILES UP
+where u.USER_ID = up.USER_ID(+)
+order by u.USER_ID
+;
 
 
