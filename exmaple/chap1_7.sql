@@ -213,4 +213,51 @@ where u.USER_ID = up.USER_ID(+)
 order by u.USER_ID
 ;
 
+-- natural join
+-- natural join은 공통 조인 매칭 컬럼의 별칭을 표기해서는 안된다.
+SELECT
+    USER_ID,
+    U.USERNAME,
+    U.EMAIL,
+    UP.FULL_NAME,
+    UP.BIO
+FROM USERS U
+NATURAL join USER_PROFILES UP
+;
+
+SELECT
+    *
+FROM USERS U
+inner join USER_PROFILES UP
+on U.USER_ID = UP.USER_ID
+;
+
+SELECT
+    *
+FROM USERS U
+natural join USER_PROFILES UP
+;
+
+SELECT
+    USER_ID,
+    U.USERNAME,
+    U.EMAIL,
+    UP.FULL_NAME,
+    UP.BIO
+FROM USERS U
+join USER_PROFILES UP
+using (user_id)
+;
+
+-- self join
+select
+    u1.USER_ID,
+    u1.USERNAME,
+    u1.MANAGER_ID,
+    Nvl(u2.USERNAME, '상사없음') as manager_name
+from USERS u1
+left join users u2
+on u1.MANAGER_ID = u2.USER_ID
+order by u1.USER_ID
+;
 
