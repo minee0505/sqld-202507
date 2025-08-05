@@ -261,3 +261,5 @@ WHERE
             FROM POSTS p
             WHERE p.user_id = u.user_id)
 order by u.USER_ID;
+
+select 1 from users;
